@@ -93,4 +93,7 @@ MonoBehaviour:
   - {fileID: 852061882, guid: b9de3b2b4e4979b47842cf87c62b0819, type: 3}
   - {fileID: -757007314, guid: b9de3b2b4e4979b47842cf87c62b0819, type: 3}
   - {fileID: 580160255, guid: b9de3b2b4e4979b47842cf87c62b0819, type: 3}
-  cardAspect: {x: 56, y: 80}
+  cardLayout:
+    x: 56
+    y: 80
+  gridSpacing: {x: 12, y: 12}

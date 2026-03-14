@@ -1,3 +1,4 @@
+using CardMatch.Data;
 using UnityEngine;
 
 namespace CardMatch.SO
@@ -6,9 +7,11 @@ namespace CardMatch.SO
     public class GameData : ScriptableObject
     {
         [SerializeField] private Sprite[] cardSprites;
-        [SerializeField] private Vector2 cardAspect;
+        [SerializeField] private LayoutData cardLayout;
+        [SerializeField] private Vector2Int gridSpacing;
         
         public Sprite[] CardSprites => cardSprites;
-        public Vector2 CardAspect => cardAspect;
+        public LayoutData CardLayout => cardLayout;
+        public Vector2Int GridSpacing => gridSpacing;
     }
 }
