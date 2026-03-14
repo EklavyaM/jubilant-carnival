@@ -1,27 +1,25 @@
 using System.Collections.Generic;
 using CardMatch.Data;
+using CardMatch.Entities;
 using CardMatch.SO;
+using CardMatch.Utils;
 using UnityEngine;
 
 namespace CardMatch.Managers
 {
-    public class TableManager : MonoBehaviour
+    public class TableManager
     {
-        [Header("Data")] [SerializeField] private GameData gameData;
-        [SerializeField] private GameObject cardPrefab;
-        [SerializeField] private RectTransform tableRoot;
+        private readonly GameData _gameData;
+        private readonly RectTransform _tableRoot;
+        private readonly ObjectPool<Card> _cardPool;
 
-        [Header("Editor")] [SerializeField] private LayoutData testLayout;
-        [SerializeField] private bool testMode;
+        private readonly List<Card> _cards = new List<Card>();
 
-        private readonly List<GameObject> _cards = new List<GameObject>();
-
-        private void OnEnable()
+        public TableManager(GameData gameData, RectTransform tableRoot, ObjectPool<Card> cardPool)
         {
-#if UNITY_EDITOR
-            if (testMode)
-                TryGenerate(testLayout);
-#endif
+            _gameData = gameData;
+            _tableRoot = tableRoot;
+            _cardPool = cardPool;
         }
 
         public bool TryGenerate(LayoutData layout)
@@ -34,23 +32,23 @@ namespace CardMatch.Managers
 
             Clear();
 
-            float containerWidth = tableRoot.rect.width;
-            float containerHeight = tableRoot.rect.height;
+            float containerWidth = _tableRoot.rect.width;
+            float containerHeight = _tableRoot.rect.height;
 
-            float maxWidth = (containerWidth - gameData.GridSpacing.x * (layout.x - 1)) / layout.x;
-            float maxHeight = (containerHeight - gameData.GridSpacing.y * (layout.y - 1)) / layout.y;
+            float maxWidth = (containerWidth - _gameData.GridSpacing.x * (layout.x - 1)) / layout.x;
+            float maxHeight = (containerHeight - _gameData.GridSpacing.y * (layout.y - 1)) / layout.y;
 
             float cardWidth = maxWidth;
-            float cardHeight = cardWidth / gameData.CardLayout.Aspect;
+            float cardHeight = cardWidth / _gameData.CardLayout.Aspect;
 
             if (cardHeight > maxHeight)
             {
                 cardHeight = maxHeight;
-                cardWidth = cardHeight * gameData.CardLayout.Aspect;
+                cardWidth = cardHeight * _gameData.CardLayout.Aspect;
             }
 
-            float gridWidth = layout.x * cardWidth + (layout.x - 1) * gameData.GridSpacing.x;
-            float gridHeight = layout.y * cardHeight + (layout.y - 1) * gameData.GridSpacing.y;
+            float gridWidth = layout.x * cardWidth + (layout.x - 1) * _gameData.GridSpacing.x;
+            float gridHeight = layout.y * cardHeight + (layout.y - 1) * _gameData.GridSpacing.y;
 
             float startX = (containerWidth - gridWidth) / 2f;
             float startY = -(containerHeight - gridHeight) / 2f;
@@ -59,13 +57,20 @@ namespace CardMatch.Managers
             {
                 for (int col = 0; col < layout.x; col++)
                 {
-                    GameObject card = Instantiate(cardPrefab, tableRoot);
+                    if (!_cardPool.TryGet(out Card card))
+                    {
+                        Debug.LogError("Unable to create enough cards");
+                        Clear();
+                        return false;
+                    }
+                    
                     RectTransform cardTransform = card.GetComponent<RectTransform>();
-
+                    cardTransform.SetParent(_tableRoot);
+                    
                     cardTransform.sizeDelta = new Vector2(cardWidth, cardHeight);
 
-                    float x = startX + col * (cardWidth + gameData.GridSpacing.x);
-                    float y = startY - row * (cardHeight + gameData.GridSpacing.y);
+                    float x = startX + col * (cardWidth + _gameData.GridSpacing.x);
+                    float y = startY - row * (cardHeight + _gameData.GridSpacing.y);
 
                     cardTransform.anchoredPosition = new Vector2(x, y);
 
@@ -78,8 +83,8 @@ namespace CardMatch.Managers
 
         public void Clear()
         {
-            foreach (GameObject card in _cards)
-                Destroy(card);
+            foreach (Card card in _cards)
+                _cardPool.Release(card);
             _cards.Clear();
         }
     }
