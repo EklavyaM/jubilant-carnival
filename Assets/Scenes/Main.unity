@@ -548,7 +548,6 @@ GameObject:
   m_Component:
   - component: {fileID: 688452396}
   - component: {fileID: 688452397}
-  - component: {fileID: 688452398}
   m_Layer: 5
   m_Name: Table
   m_TagString: Untagged
@@ -573,7 +572,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0.000061035156, y: -0.000061035156}
   m_SizeDelta: {x: -0.000030517578, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &688452397
@@ -584,25 +583,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688452395}
   m_CullTransparentMesh: 1
---- !u!114 &688452398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 688452395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dde92a0342ef4435a33806eee727c883, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameData: {fileID: 11400000, guid: 738b38f64b2b73d43815dd722da84ff4, type: 2}
-  cardPrefab: {fileID: 394206852}
-  tableRoot: {fileID: 688452396}
-  testLayout:
-    x: 5
-    y: 6
-  testMode: 0
 --- !u!1 &963837163
 GameObject:
   m_ObjectHideFlags: 0

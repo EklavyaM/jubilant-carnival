@@ -11,6 +11,10 @@ namespace CardMatch.SO
         
         [Header("Sprites")]
         [SerializeField] private Sprite[] cardSprites;
+        [SerializeField] private Sprite backSprite;
+        
+        [Header("Properties")] [SerializeField, Min(0f)]
+        private float flipDuration;
         
         [Header("Layout")]
         [SerializeField] private LayoutData cardLayout;
@@ -24,5 +28,7 @@ namespace CardMatch.SO
         public LayoutData CardLayout => cardLayout;
         public Vector2Int GridSpacing => gridSpacing;
         public LevelData[] Levels => levels;
+        public Sprite BackSprite => backSprite;
+        public float FlipDuration => flipDuration;
     }
 }
