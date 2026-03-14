@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad4508e92101487cb15bd863593116d6, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 0}
+  cardPrefab: {fileID: 7208996872322683835, guid: adea4ca48e0e5cd4d961245653ce969b, type: 3}
   cardSprites:
   - {fileID: -1978913071, guid: b9de3b2b4e4979b47842cf87c62b0819, type: 3}
   - {fileID: 1937103218, guid: b9de3b2b4e4979b47842cf87c62b0819, type: 3}
@@ -96,11 +96,12 @@ MonoBehaviour:
   - {fileID: 580160255, guid: b9de3b2b4e4979b47842cf87c62b0819, type: 3}
   backSprite: {fileID: 1981793515, guid: b9de3b2b4e4979b47842cf87c62b0819, type: 3}
   flipDuration: 0.3
+  maxCards: 500
   cardLayout:
     x: 56
     y: 80
   gridSpacing: {x: 12, y: 12}
   levels:
   - layoutData:
-      x: 4
+      x: 6
       y: 4

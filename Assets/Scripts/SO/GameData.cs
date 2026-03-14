@@ -1,34 +1,58 @@
 using CardMatch.Data;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CardMatch.SO
 {
+    [System.Serializable]
+    public struct GamePrefabs
+    {
+        public GameObject cardPrefab;
+    }
+
+    [System.Serializable]
+    public struct GameSprites
+    {
+        public Sprite[] cardSprites;
+        public Sprite backSprite;
+    }
+
+    [System.Serializable]
+    public struct CardProperties
+    {
+        [Min(1)] public uint maxCards;
+        [Min(0f)] public float flipDuration;
+    }
+
+    [System.Serializable]
+    public struct LevelLayoutProperties
+    {
+        public LayoutData cardLayout;
+        public Vector2Int gridSpacing;
+    }
+
+    [System.Serializable]
+    public struct GameLevels
+    {
+        public LevelData[] levels;
+    }
+
+    [System.Serializable]
+    public struct LevelAnimationProperties
+    {
+        public float levelSetupInitialDelay;
+        public float waitBeforeNextFlip;
+        public float observeDelay;
+    }
+
     [CreateAssetMenu]
     public class GameData : ScriptableObject
     {
-        [Header("Prefabs")]
-        [SerializeField] private GameObject cardPrefab;
-        
-        [Header("Sprites")]
-        [SerializeField] private Sprite[] cardSprites;
-        [SerializeField] private Sprite backSprite;
-        
-        [Header("Properties")] [SerializeField, Min(0f)]
-        private float flipDuration;
-        
-        [Header("Layout")]
-        [SerializeField] private LayoutData cardLayout;
-        [SerializeField] private Vector2Int gridSpacing;
-        
-        [Header("Levels")]
-        [SerializeField] private LevelData[] levels;
-        
-        public GameObject CardPrefab => cardPrefab;
-        public Sprite[] CardSprites => cardSprites;
-        public LayoutData CardLayout => cardLayout;
-        public Vector2Int GridSpacing => gridSpacing;
-        public LevelData[] Levels => levels;
-        public Sprite BackSprite => backSprite;
-        public float FlipDuration => flipDuration;
+        public GamePrefabs gamePrefabs;
+        public GameSprites gameSprites;
+        public CardProperties cardProperties;
+        public LevelLayoutProperties levelLayoutProperties;
+        public GameLevels gameLevels;
+        public LevelAnimationProperties levelAnimationProperties;
     }
 }

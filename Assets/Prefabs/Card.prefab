@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -186.00006, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 280, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7208996872322683838
@@ -138,4 +138,4 @@ MonoBehaviour:
   button: {fileID: 7208996872322683832}
   gameData: {fileID: 11400000, guid: 738b38f64b2b73d43815dd722da84ff4, type: 2}
   testFront: {fileID: 1937103218, guid: b9de3b2b4e4979b47842cf87c62b0819, type: 3}
-  testMode: 1
+  testMode: 0

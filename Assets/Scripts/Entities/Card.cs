@@ -16,19 +16,16 @@ namespace CardMatch.Entities
         [Header("Properties")] [SerializeField]
         private GameData gameData;
 
-        [Header("Test")] [SerializeField] private Sprite testFront;
-        [SerializeField] private bool testMode;
-
-        private Sprite _frontSprite;
-
-        public Sprite FrontSprite
-        {
-            set => _frontSprite = value;
-            get => testMode ? testFront : _frontSprite;
-        }
+        public Sprite FrontSprite { set; get; }
 
         public bool IsFlipping { private set; get; }
         public bool IsFront { private set; get; } = false;
+
+        public bool IsInteractable
+        {
+            set => button.interactable = value;
+            get => button.interactable;
+        }
 
         public event Action<Card> OnClick;
 
@@ -39,13 +36,11 @@ namespace CardMatch.Entities
 
         private void OnEnable()
         {
-            image.sprite = IsFront ? FrontSprite : gameData.BackSprite;
+            image.sprite = IsFront ? FrontSprite : gameData.gameSprites.backSprite;
         }
 
         private void Clicked()
         {
-            Flip();
-
             if (IsFlipping) return;
             OnClick?.Invoke(this);
         }
@@ -56,15 +51,29 @@ namespace CardMatch.Entities
                 StartCoroutine(FlipCoroutine());
         }
 
+        public void FlipToFront()
+        {
+            if (IsFlipping || IsFront) return;
+            
+            Flip();
+        }
+
+        public void FlipToBack()
+        {
+            if (IsFlipping || !IsFront) return;
+            
+            Flip();
+        }
+
         IEnumerator FlipCoroutine()
         {
             IsFlipping = true;
 
             float time = 0f;
 
-            while (time < gameData.FlipDuration * 0.5f)
+            while (time < gameData.cardProperties.flipDuration * 0.5f)
             {
-                float t = time / (gameData.FlipDuration * 0.5f);
+                float t = time / (gameData.cardProperties.flipDuration * 0.5f);
                 float scaleX = Mathf.Lerp(1f, 0f, t);
                 transform.localScale = new Vector3(scaleX, 1f, 1f);
 
@@ -75,13 +84,13 @@ namespace CardMatch.Entities
             transform.localScale = new Vector3(0f, 1f, 1f);
 
             IsFront = !IsFront;
-            image.sprite = IsFront ? FrontSprite : gameData.BackSprite;
+            image.sprite = IsFront ? FrontSprite :  gameData.gameSprites.backSprite;
 
             time = 0f;
 
-            while (time < gameData.FlipDuration * 0.5f)
+            while (time < gameData.cardProperties.flipDuration * 0.5f)
             {
-                float t = time / (gameData.FlipDuration * 0.5f);
+                float t = time / (gameData.cardProperties.flipDuration * 0.5f);
                 float scaleX = Mathf.Lerp(0f, 1f, t);
                 transform.localScale = new Vector3(scaleX, 1f, 1f);
 
