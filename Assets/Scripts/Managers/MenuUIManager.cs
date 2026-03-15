@@ -1,4 +1,5 @@
-using CardMatch.Events;
+using CardMatch.SO.Events;
+using CardMatch.SO.Funcs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,11 +17,16 @@ namespace CardMatch.Managers
         [SerializeField] private OnNewGame onNewGame;
         [SerializeField] private OnExitGame onExitGame;
 
+        [Header("Funcs")]
+        [SerializeField] private CanContinue canContinue;
+        
         private void OnEnable()
         {
             continueButton.onClick.AddListener(onContinue.Raise);
             newGameButton.onClick.AddListener(onNewGame.Raise);
             exitButton.onClick.AddListener(onExitGame.Raise);
+            
+            continueButton.gameObject.SetActive(canContinue.Request());
         }
 
         private void OnDisable()

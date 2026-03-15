@@ -1,9 +1,9 @@
 using CardMatch.Data;
 using UnityEngine;
 
-namespace CardMatch.Events
+namespace CardMatch.SO.Events
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "SO/Events/On Score Updated")]
     public class OnScoreUpdated : GenericEvent<ScoreData>
     {
         

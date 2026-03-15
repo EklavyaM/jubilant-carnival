@@ -107,18 +107,18 @@ MonoBehaviour:
     gridSpacing: {x: 12, y: 12}
   gameLevels:
     levels:
-    - layoutData:
+    - levelId: level_0
+      layoutData:
         x: 3
         y: 2
-    - layoutData:
+    - levelId: level_1
+      layoutData:
         x: 4
         y: 3
-    - layoutData:
+    - levelId: level_2
+      layoutData:
         x: 5
         y: 4
-    - layoutData:
-        x: 6
-        y: 5
   levelAnimationProperties:
     levelSetupInitialDelay: 0.5
     waitBeforeNextFlip: 0.1

@@ -1,6 +1,6 @@
 using CardMatch.Data;
 using CardMatch.Entities;
-using CardMatch.Events;
+using CardMatch.SO.Events;
 using CardMatch.SO;
 using UnityEngine;
 

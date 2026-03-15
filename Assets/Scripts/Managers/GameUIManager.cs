@@ -1,6 +1,6 @@
 using System;
 using CardMatch.Data;
-using CardMatch.Events;
+using CardMatch.SO.Events;
 using CardMatch.SO;
 using TMPro;
 using UnityEngine;

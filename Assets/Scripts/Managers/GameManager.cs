@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Linq;
+using CardMatch.Data;
 using CardMatch.Entities;
-using CardMatch.Events;
+using CardMatch.SO.Events;
 using CardMatch.SO;
+using CardMatch.SO.Funcs;
 using CardMatch.Utils;
 using UnityEngine;
 
@@ -26,11 +28,14 @@ namespace CardMatch.Managers
         [SerializeField] private OnExitGame onExitGame;
         [SerializeField] private OnReturnToMenu onReturnToMenu;
 
+        [Header("Funcs")] [SerializeField] private CanContinue canContinue;
+
         private ObjectPool<Card> _cardPool;
 
         private LevelManager _levelManager;
         private TableManager _tableManager;
         private ScoreManager _scoreManager;
+        private SaveDataManager _saveDataManager;
 
         private Card _previouslySelectedCard;
 
@@ -46,6 +51,7 @@ namespace CardMatch.Managers
             _levelManager = new LevelManager(gameData, _tableManager, onLevelLoaded, onAllLevelsCompleted);
 
             _scoreManager = new ScoreManager(onScoreUpdated);
+            _saveDataManager = new SaveDataManager();
         }
 
         private void Start()
@@ -61,6 +67,7 @@ namespace CardMatch.Managers
             onContinue.Subscribe(OnContinueGame);
             onExitGame.Subscribe(OnExitGame);
             onReturnToMenu.Subscribe(OnReturnToMenu);
+            canContinue.Subscribe(CanContinueGame);
         }
 
         private void OnDisable()
@@ -71,11 +78,13 @@ namespace CardMatch.Managers
             onContinue.Unsubscribe(OnContinueGame);
             onExitGame.Unsubscribe(OnExitGame);
             onReturnToMenu.Unsubscribe(OnReturnToMenu);
+            canContinue.Unsubscribe(CanContinueGame);
         }
 
         private void OnLevelLoaded(LevelData levelData)
         {
             _scoreManager.OnLevelLoaded(levelData);
+            _saveDataManager.OnLevelLoaded(levelData);
         }
 
         private void OnCardClick(Card card)
@@ -126,6 +135,23 @@ namespace CardMatch.Managers
 
         private void OnContinueGame()
         {
+            if (!CanContinueGame())
+                return;
+            
+            uiSwitcher.Switch(ScreenType.Gameplay);
+
+            int index = Array.FindIndex(gameData.gameLevels.levels,
+                data => string.Equals(_saveDataManager.SaveData.levelId, data.levelId));
+            index = Mathf.Clamp(index, 0, gameData.gameLevels.levels.Length - 1);
+
+            _levelLoadRoutine = StartCoroutine(_levelManager.LoadNextLevel(index));
+        }
+
+        private bool CanContinueGame()
+        {
+            int index = Array.FindIndex(gameData.gameLevels.levels,
+                data => string.Equals(_saveDataManager.SaveData.levelId, data.levelId));
+            return index >= 0 && index < gameData.gameLevels.levels.Length;
         }
 
         private void OnNewGame()

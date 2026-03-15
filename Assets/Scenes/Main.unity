@@ -1569,6 +1569,7 @@ MonoBehaviour:
   onContinue: {fileID: 11400000, guid: 7c7bffbd369dd924d8146c9860a6bd91, type: 2}
   onNewGame: {fileID: 11400000, guid: 681dba7e35dd5ee429997941300811a3, type: 2}
   onExitGame: {fileID: 11400000, guid: 6070cbf28905ee24cbc3a422ee6e3b51, type: 2}
+  canContinue: {fileID: 11400000, guid: 7b827d77f9d99eb4c9b6eec84d785776, type: 2}
 --- !u!1 &1601007542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1608,6 +1609,7 @@ MonoBehaviour:
   onNewGame: {fileID: 11400000, guid: 681dba7e35dd5ee429997941300811a3, type: 2}
   onExitGame: {fileID: 11400000, guid: 6070cbf28905ee24cbc3a422ee6e3b51, type: 2}
   onReturnToMenu: {fileID: 11400000, guid: 5e012d6fe18f55e4ea7b1ded0cd4a771, type: 2}
+  canContinue: {fileID: 11400000, guid: 7b827d77f9d99eb4c9b6eec84d785776, type: 2}
 --- !u!4 &1601007544
 Transform:
   m_ObjectHideFlags: 0

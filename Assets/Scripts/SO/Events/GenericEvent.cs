@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CardMatch.Events
+namespace CardMatch.SO.Events
 {
     public abstract class GenericEvent<T> : ScriptableObject
     {

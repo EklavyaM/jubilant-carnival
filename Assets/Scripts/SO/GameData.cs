@@ -52,7 +52,7 @@ namespace CardMatch.SO
         public float waitBeforeContinue;
     }
 
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "SO/Data/Game Data")]
     public class GameData : ScriptableObject
     {
         public GamePrefabs gamePrefabs;
