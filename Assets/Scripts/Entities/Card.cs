@@ -45,7 +45,7 @@ namespace CardMatch.Entities
             OnClick?.Invoke(this);
         }
 
-        public void Flip()
+        private void Flip()
         {
             if (!IsFlipping)
                 StartCoroutine(FlipCoroutine());
@@ -101,6 +101,15 @@ namespace CardMatch.Entities
             transform.localScale = new Vector3(1f, 1f, 1f);
 
             IsFlipping = false;
+        }
+
+        public void Clear()
+        {
+            image.sprite = gameData.gameSprites.backSprite;
+            transform.localScale = Vector3.one;
+            IsFlipping = false;
+            IsFront = false;
+            IsInteractable = true;
         }
     }
 }

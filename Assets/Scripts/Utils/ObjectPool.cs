@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -18,12 +19,15 @@ namespace CardMatch.Utils
             _poolContainer.SetActive(false);
         }
 
-        public void Generate(uint count)
+        public void Generate(uint count, Action<T> onGenerated = null)
         {
             for (int i = 0; i < count; ++i)
             {
                 GameObject @object = Object.Instantiate(_prefab, _poolContainer.transform);
-                _pool.Enqueue( @object.GetComponent<T>());
+                T component = @object.GetComponent<T>();
+                _pool.Enqueue(component);
+                
+                onGenerated?.Invoke(component);
             }
         }
 
@@ -39,7 +43,7 @@ namespace CardMatch.Utils
                 Debug.LogWarning("Component is null");
                 return;
             }
-            
+
             component.transform.SetParent(_poolContainer.transform);
             _pool.Enqueue(component);
         }

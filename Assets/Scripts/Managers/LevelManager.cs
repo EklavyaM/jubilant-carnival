@@ -1,5 +1,6 @@
 using System.Collections;
 using CardMatch.Entities;
+using CardMatch.Events;
 using CardMatch.SO;
 using CardMatch.Utils;
 using UnityEngine;
@@ -8,28 +9,26 @@ namespace CardMatch.Managers
 {
     public class LevelManager
     {
+        private readonly OnLevelLoaded _onLevelLoaded;
         private readonly GameData _gameData;
-        private readonly ObjectPool<Card> _cardPool;
         private readonly TableManager _tableManager;
 
         public int LevelIndex { private set; get; } = -1;
 
-        public LevelManager(GameData gameData, RectTransform tableRoot)
+        public LevelManager(GameData gameData, TableManager tableManager, OnLevelLoaded onLevelLoaded)
         {
             _gameData = gameData;
-            _cardPool = new ObjectPool<Card>(gameData.gamePrefabs.cardPrefab);
-            _cardPool.Generate(gameData.cardProperties.maxCards);
-            
-            _tableManager = new TableManager(gameData, tableRoot, _cardPool);
+            _tableManager = tableManager;
+            _onLevelLoaded = onLevelLoaded;
         }
 
         private IEnumerator LevelSetupAnimation()
         {
-            yield return new WaitForSeconds(_gameData.levelAnimationProperties.levelSetupInitialDelay);
-
             foreach (Card card in _tableManager.Cards)
                 card.IsInteractable = false;
             
+            yield return new WaitForSeconds(_gameData.levelAnimationProperties.levelSetupInitialDelay);
+
             foreach (Card card in _tableManager.Cards)
             {
                 card.FlipToFront();
@@ -52,6 +51,7 @@ namespace CardMatch.Managers
         {
             ++LevelIndex;
             _tableManager.TryGenerate(_gameData.gameLevels.levels[LevelIndex].layoutData);
+            _onLevelLoaded.Raise(_gameData.gameLevels.levels[LevelIndex]);
 
             yield return LevelSetupAnimation();
         }
