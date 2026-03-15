@@ -4,7 +4,7 @@ using UnityEngine;
 namespace CardMatch.Events
 {
     [CreateAssetMenu]
-    public class OnLevelLoaded : BaseEvent<LevelData>
+    public class OnLevelLoaded : GenericEvent<LevelData>
     {
         
     }

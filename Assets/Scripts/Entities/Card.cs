@@ -68,6 +68,7 @@ namespace CardMatch.Entities
         IEnumerator FlipCoroutine()
         {
             IsFlipping = true;
+            IsFront = !IsFront;
 
             float time = 0f;
 
@@ -82,8 +83,6 @@ namespace CardMatch.Entities
             }
 
             transform.localScale = new Vector3(0f, 1f, 1f);
-
-            IsFront = !IsFront;
             image.sprite = IsFront ? FrontSprite :  gameData.gameSprites.backSprite;
 
             time = 0f;

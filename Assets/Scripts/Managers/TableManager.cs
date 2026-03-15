@@ -124,7 +124,11 @@ namespace CardMatch.Managers
         public void Clear()
         {
             foreach (Card card in _cards)
+            {
+                card.Clear();
                 _cardPool.Release(card);
+            }
+            
             _cards.Clear();
         }
     }

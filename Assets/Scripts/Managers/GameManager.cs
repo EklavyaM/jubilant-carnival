@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Linq;
 using CardMatch.Entities;
 using CardMatch.Events;
 using CardMatch.SO;
@@ -16,6 +18,7 @@ namespace CardMatch.Managers
         [Header("Events")]
         [SerializeField] private OnLevelLoaded onLevelLoaded;
         [SerializeField] private OnScoreUpdated onScoreUpdated;
+        [SerializeField] private OnAllLevelsCompleted onAllLevelsCompleted;
 
         private ObjectPool<Card> _cardPool;
 
@@ -31,7 +34,7 @@ namespace CardMatch.Managers
             _cardPool.Generate(gameData.cardProperties.maxCards, card => card.OnClick += OnCardClick);
 
             _tableManager = new TableManager(gameData, tableRoot, _cardPool);
-            _levelManager = new LevelManager(gameData, _tableManager, onLevelLoaded);
+            _levelManager = new LevelManager(gameData, _tableManager, onLevelLoaded, onAllLevelsCompleted);
 
             _scoreManager = new ScoreManager(onScoreUpdated);
         }
@@ -39,16 +42,18 @@ namespace CardMatch.Managers
         private void OnEnable()
         {
             onLevelLoaded.Subscribe(OnLevelLoaded);
+            onAllLevelsCompleted.Subscribe(OnAllLevelsCompleted);
         }
 
         private void OnDisable()
         {
             onLevelLoaded.Unsubscribe(OnLevelLoaded);
+            onAllLevelsCompleted.Unsubscribe(OnAllLevelsCompleted);
         }
 
         private void Start()
         {
-            StartCoroutine(_levelManager.Load());
+            StartCoroutine(_levelManager.LoadNextLevel());
         }
 
         private void OnLevelLoaded(LevelData levelData)
@@ -79,6 +84,26 @@ namespace CardMatch.Managers
             {
                 _previouslySelectedCard = card;
             }
+
+            if (ReachedEndCondition())
+                StartCoroutine(ContinueToNextLevel());
+        }
+        
+        private bool ReachedEndCondition()
+        {
+            return _tableManager.Cards.All(card=>card.IsFront);
+        }
+
+        private IEnumerator ContinueToNextLevel()
+        {
+            yield return new WaitForSeconds(gameData.endConditionProperties.waitBeforeContinue);
+            
+            yield return _levelManager.LoadNextLevel();
+        }
+
+        private void OnAllLevelsCompleted()
+        {
+            Debug.LogError("All levels completed");
         }
     }
 }

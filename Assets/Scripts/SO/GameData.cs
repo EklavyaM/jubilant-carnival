@@ -43,6 +43,13 @@ namespace CardMatch.SO
         public float levelSetupInitialDelay;
         public float waitBeforeNextFlip;
         public float observeDelay;
+        public float waitAfterUnload;
+    }
+
+    [System.Serializable]
+    public struct EndConditionProperties
+    {
+        public float waitBeforeContinue;
     }
 
     [CreateAssetMenu]
@@ -54,5 +61,6 @@ namespace CardMatch.SO
         public LevelLayoutProperties levelLayoutProperties;
         public GameLevels gameLevels;
         public LevelAnimationProperties levelAnimationProperties;
+        public EndConditionProperties endConditionProperties;
     }
 }

@@ -1,10 +1,9 @@
-using CardMatch.Data;
 using UnityEngine;
 
 namespace CardMatch.Events
 {
     [CreateAssetMenu]
-    public class OnScoreUpdated : GenericEvent<ScoreData>
+    public class OnAllLevelsCompleted : BasicEvent
     {
         
     }

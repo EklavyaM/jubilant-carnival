@@ -1128,6 +1128,7 @@ MonoBehaviour:
   gameData: {fileID: 11400000, guid: 738b38f64b2b73d43815dd722da84ff4, type: 2}
   onLevelLoaded: {fileID: 11400000, guid: 2b289df7e0c605c45863b3346672607c, type: 2}
   onScoreUpdated: {fileID: 11400000, guid: 6163912ebb2c31d4daf0a7cc53c93765, type: 2}
+  onAllLevelsCompleted: {fileID: 11400000, guid: fae8e2d80e7e02141943333c23586f20, type: 2}
 --- !u!4 &1601007544
 Transform:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CardMatch.Events
 {
-    public class BaseEvent<T> : ScriptableObject
+    public abstract class GenericEvent<T> : ScriptableObject
     {
         private event Action<T> Event;
 

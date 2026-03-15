@@ -108,9 +108,21 @@ MonoBehaviour:
   gameLevels:
     levels:
     - layoutData:
-        x: 6
+        x: 3
+        y: 2
+    - layoutData:
+        x: 4
+        y: 3
+    - layoutData:
+        x: 5
         y: 4
+    - layoutData:
+        x: 6
+        y: 5
   levelAnimationProperties:
     levelSetupInitialDelay: 0.5
     waitBeforeNextFlip: 0.1
     observeDelay: 3
+    waitAfterUnload: 0.5
+  endConditionProperties:
+    waitBeforeContinue: 1
