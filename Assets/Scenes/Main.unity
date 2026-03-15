@@ -427,7 +427,7 @@ RectTransform:
   - {fileID: 1067349248}
   - {fileID: 1373721668}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -880,7 +880,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1067349247
 GameObject:
@@ -958,54 +958,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1067349247}
   m_CullTransparentMesh: 1
---- !u!1 &1313047434
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1313047436}
-  - component: {fileID: 1313047435}
-  m_Layer: 0
-  m_Name: GameUIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1313047435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313047434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 835fe1fb034a41cba86e6e1633206dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onLevelLoaded: {fileID: 11400000, guid: 2b289df7e0c605c45863b3346672607c, type: 2}
-  onScoreUpdated: {fileID: 11400000, guid: 6163912ebb2c31d4daf0a7cc53c93765, type: 2}
-  scoreLabel: {fileID: 851493426}
-  levelLabel: {fileID: 88978929}
---- !u!4 &1313047436
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313047434}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1373721667
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,6 +967,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1373721668}
+  - component: {fileID: 1373721669}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -1034,6 +987,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1565912963}
   - {fileID: 2085188237}
   m_Father: {fileID: 518421614}
   m_RootOrder: 1
@@ -1043,6 +997,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -240, y: -240}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1373721669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373721667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8cd4f7de8c44b3959a6e6aa04faaee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - type: 0
+    object: {fileID: 1565912962}
+  - type: 1
+    object: {fileID: 2085188236}
 --- !u!1 &1391610269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,6 +1066,42 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1065440247107993036, guid: 7e5f3d61903c09046b26de994e4328e7, type: 3}
   m_PrefabInstance: {fileID: 1065440248572534759}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1565912962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1565912963}
+  m_Layer: 5
+  m_Name: MainMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1565912963
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565912962}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1373721668}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1601007542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,10 +1132,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tableRoot: {fileID: 688452396}
+  uiSwitcher: {fileID: 1373721669}
   gameData: {fileID: 11400000, guid: 738b38f64b2b73d43815dd722da84ff4, type: 2}
   onLevelLoaded: {fileID: 11400000, guid: 2b289df7e0c605c45863b3346672607c, type: 2}
   onScoreUpdated: {fileID: 11400000, guid: 6163912ebb2c31d4daf0a7cc53c93765, type: 2}
   onAllLevelsCompleted: {fileID: 11400000, guid: fae8e2d80e7e02141943333c23586f20, type: 2}
+  onContinue: {fileID: 11400000, guid: 7c7bffbd369dd924d8146c9860a6bd91, type: 2}
+  onNewGame: {fileID: 11400000, guid: 681dba7e35dd5ee429997941300811a3, type: 2}
+  onExitGame: {fileID: 11400000, guid: 6070cbf28905ee24cbc3a422ee6e3b51, type: 2}
 --- !u!4 &1601007544
 Transform:
   m_ObjectHideFlags: 0
@@ -1153,6 +1164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2085188237}
+  - component: {fileID: 2085188238}
   m_Layer: 5
   m_Name: Game
   m_TagString: Untagged
@@ -1175,13 +1187,29 @@ RectTransform:
   - {fileID: 1391610270}
   - {fileID: 688452396}
   m_Father: {fileID: 1373721668}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2085188238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085188236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 835fe1fb034a41cba86e6e1633206dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onLevelLoaded: {fileID: 11400000, guid: 2b289df7e0c605c45863b3346672607c, type: 2}
+  onScoreUpdated: {fileID: 11400000, guid: 6163912ebb2c31d4daf0a7cc53c93765, type: 2}
+  scoreLabel: {fileID: 851493426}
+  levelLabel: {fileID: 88978929}
 --- !u!1001 &1065440248572534759
 PrefabInstance:
   m_ObjectHideFlags: 0

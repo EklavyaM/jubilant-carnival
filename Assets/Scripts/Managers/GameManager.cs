@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using CardMatch.Entities;
@@ -12,6 +13,7 @@ namespace CardMatch.Managers
     {
         [Header("Components")] [SerializeField]
         private RectTransform tableRoot;
+        [SerializeField] private UISwitcher uiSwitcher;
 
         [Header("Data")] [SerializeField] private GameData gameData;
         
@@ -19,6 +21,9 @@ namespace CardMatch.Managers
         [SerializeField] private OnLevelLoaded onLevelLoaded;
         [SerializeField] private OnScoreUpdated onScoreUpdated;
         [SerializeField] private OnAllLevelsCompleted onAllLevelsCompleted;
+        [SerializeField] private OnContinue onContinue;
+        [SerializeField] private OnNewGame onNewGame;
+        [SerializeField] private OnExitGame onExitGame;
 
         private ObjectPool<Card> _cardPool;
 
@@ -39,21 +44,27 @@ namespace CardMatch.Managers
             _scoreManager = new ScoreManager(onScoreUpdated);
         }
 
+        private void Start()
+        {
+            uiSwitcher.Switch(ScreenType.MainMenu);
+        }
+
         private void OnEnable()
         {
             onLevelLoaded.Subscribe(OnLevelLoaded);
             onAllLevelsCompleted.Subscribe(OnAllLevelsCompleted);
+            onNewGame.Subscribe(OnNewGame);
+            onContinue.Subscribe(OnContinueGame);
+            onExitGame.Subscribe(OnExitGame);
         }
 
         private void OnDisable()
         {
             onLevelLoaded.Unsubscribe(OnLevelLoaded);
             onAllLevelsCompleted.Unsubscribe(OnAllLevelsCompleted);
-        }
-
-        private void Start()
-        {
-            StartCoroutine(_levelManager.LoadNextLevel());
+            onNewGame.Unsubscribe(OnNewGame);
+            onContinue.Unsubscribe(OnContinueGame);
+            onExitGame.Unsubscribe(OnExitGame);
         }
 
         private void OnLevelLoaded(LevelData levelData)
@@ -103,7 +114,23 @@ namespace CardMatch.Managers
 
         private void OnAllLevelsCompleted()
         {
-            Debug.LogError("All levels completed");
+            uiSwitcher.Switch(ScreenType.MainMenu);
+        }
+
+        private void OnContinueGame()
+        {
+            
+        }
+
+        private void OnNewGame()
+        {
+            uiSwitcher.Switch(ScreenType.Gameplay);
+            StartCoroutine(_levelManager.LoadNextLevel());
+        }
+
+        private void OnExitGame()
+        {
+            Application.Quit();
         }
     }
 }
