@@ -52,15 +52,20 @@ namespace CardMatch.Managers
 
         private IEnumerator UnloadLevel()
         {
+            bool anyCardFlipRequired = false;
+
             foreach (Card card in _tableManager.Cards)
             {
                 if (!card.IsFront) continue;
-                
+
+                anyCardFlipRequired = true;
+
                 card.FlipToBack();
                 yield return new WaitForSeconds(_gameData.levelAnimationProperties.waitBeforeNextFlip);
             }
-            
-            yield return new WaitForSeconds(_gameData.levelAnimationProperties.waitAfterUnload);
+
+            if (anyCardFlipRequired)
+                yield return new WaitForSeconds(_gameData.levelAnimationProperties.waitAfterUnload);
         }
 
         public IEnumerator LoadNextLevel()
@@ -72,14 +77,13 @@ namespace CardMatch.Managers
         {
             yield return UnloadLevel();
 
+            Clear();
+
             if (index < 0 || index >= _gameData.gameLevels.levels.Length)
             {
-                _tableManager.Clear();
                 _onAllLevelsCompleted.Raise();
                 yield break;
             }
-
-            _tableManager.Clear();
 
             LevelIndex = index;
 
@@ -87,6 +91,12 @@ namespace CardMatch.Managers
             _onLevelLoaded.Raise(_gameData.gameLevels.levels[LevelIndex]);
 
             yield return LevelSetupAnimation();
+        }
+
+        public void Clear()
+        {
+            LevelIndex = -1;
+            _tableManager.Clear();
         }
     }
 }

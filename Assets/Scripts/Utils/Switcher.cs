@@ -15,7 +15,13 @@ namespace CardMatch.Utils
 
         [SerializeField] private List<Data> objects;
         
-        public event Action<T> OnSwitch; 
+        public event Action<T> OnSwitch;
+
+        protected virtual void Awake()
+        {
+            foreach(Data data in objects)
+                data.@object.SetActive(false);
+        }
 
         public void Switch(T type)
         {

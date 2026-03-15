@@ -13,17 +13,18 @@ namespace CardMatch.Managers
     {
         [Header("Components")] [SerializeField]
         private RectTransform tableRoot;
+
         [SerializeField] private UISwitcher uiSwitcher;
 
         [Header("Data")] [SerializeField] private GameData gameData;
-        
-        [Header("Events")]
-        [SerializeField] private OnLevelLoaded onLevelLoaded;
+
+        [Header("Events")] [SerializeField] private OnLevelLoaded onLevelLoaded;
         [SerializeField] private OnScoreUpdated onScoreUpdated;
         [SerializeField] private OnAllLevelsCompleted onAllLevelsCompleted;
         [SerializeField] private OnContinue onContinue;
         [SerializeField] private OnNewGame onNewGame;
         [SerializeField] private OnExitGame onExitGame;
+        [SerializeField] private OnReturnToMenu onReturnToMenu;
 
         private ObjectPool<Card> _cardPool;
 
@@ -32,6 +33,9 @@ namespace CardMatch.Managers
         private ScoreManager _scoreManager;
 
         private Card _previouslySelectedCard;
+
+        private Coroutine _levelLoadRoutine;
+        private Coroutine _continueRoutine;
 
         private void Awake()
         {
@@ -56,6 +60,7 @@ namespace CardMatch.Managers
             onNewGame.Subscribe(OnNewGame);
             onContinue.Subscribe(OnContinueGame);
             onExitGame.Subscribe(OnExitGame);
+            onReturnToMenu.Subscribe(OnReturnToMenu);
         }
 
         private void OnDisable()
@@ -65,6 +70,7 @@ namespace CardMatch.Managers
             onNewGame.Unsubscribe(OnNewGame);
             onContinue.Unsubscribe(OnContinueGame);
             onExitGame.Unsubscribe(OnExitGame);
+            onReturnToMenu.Unsubscribe(OnReturnToMenu);
         }
 
         private void OnLevelLoaded(LevelData levelData)
@@ -97,40 +103,56 @@ namespace CardMatch.Managers
             }
 
             if (ReachedEndCondition())
-                StartCoroutine(ContinueToNextLevel());
+                _continueRoutine = StartCoroutine(ContinueToNextLevel());
         }
-        
+
         private bool ReachedEndCondition()
         {
-            return _tableManager.Cards.All(card=>card.IsFront);
+            return _tableManager.Cards.All(card => card.IsFront);
         }
 
         private IEnumerator ContinueToNextLevel()
         {
             yield return new WaitForSeconds(gameData.endConditionProperties.waitBeforeContinue);
-            
+
             yield return _levelManager.LoadNextLevel();
         }
 
         private void OnAllLevelsCompleted()
         {
+            ResetGameplay();
             uiSwitcher.Switch(ScreenType.MainMenu);
         }
 
         private void OnContinueGame()
         {
-            
         }
 
         private void OnNewGame()
         {
             uiSwitcher.Switch(ScreenType.Gameplay);
-            StartCoroutine(_levelManager.LoadNextLevel());
+            _levelLoadRoutine = StartCoroutine(_levelManager.LoadNextLevel());
+        }
+
+        private void OnReturnToMenu()
+        {
+            ResetGameplay();
+            uiSwitcher.Switch(ScreenType.MainMenu);
         }
 
         private void OnExitGame()
         {
             Application.Quit();
+        }
+
+        private void ResetGameplay()
+        {
+            if (_levelLoadRoutine != null)
+                StopCoroutine(_levelLoadRoutine);
+            if (_continueRoutine != null)
+                StopCoroutine(_continueRoutine);
+
+            _levelManager.Clear();
         }
     }
 }
