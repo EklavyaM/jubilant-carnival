@@ -126,3 +126,13 @@ MonoBehaviour:
     waitAfterUnload: 0.5
   endConditionProperties:
     waitBeforeContinue: 1
+  audioProperties:
+    audioProperties:
+    - fxType: 0
+      audioClip: {fileID: 8300000, guid: 4b0a908adc2a4bb489c61dae107b0d1b, type: 3}
+    - fxType: 1
+      audioClip: {fileID: 8300000, guid: f220d3f7335117243a4108ada337f04f, type: 3}
+    - fxType: 2
+      audioClip: {fileID: 8300000, guid: 730a62abfbc7fe343a863105bf34356e, type: 3}
+    - fxType: 3
+      audioClip: {fileID: 8300000, guid: 78562a51e39613244b69d5311fea21b5, type: 3}

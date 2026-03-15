@@ -17,6 +17,7 @@ namespace CardMatch.Managers
         private RectTransform tableRoot;
 
         [SerializeField] private UISwitcher uiSwitcher;
+        [SerializeField] private AudioSource audioSource;
 
         [Header("Data")] [SerializeField] private GameData gameData;
 
@@ -32,6 +33,7 @@ namespace CardMatch.Managers
 
         private ObjectPool<Card> _cardPool;
 
+        private AudioManager _audioManager;
         private LevelManager _levelManager;
         private TableManager _tableManager;
         private ScoreManager _scoreManager;
@@ -52,6 +54,7 @@ namespace CardMatch.Managers
 
             _scoreManager = new ScoreManager(onScoreUpdated);
             _saveDataManager = new SaveDataManager();
+            _audioManager = new AudioManager(gameData, audioSource);
         }
 
         private void Start()
@@ -91,17 +94,19 @@ namespace CardMatch.Managers
         {
             card.IsInteractable = false;
             card.FlipToFront();
+            
+            _audioManager.Play(FXType.Swipe);
 
             if (_previouslySelectedCard != null)
             {
                 if (card.FrontSprite == _previouslySelectedCard.FrontSprite)
                 {
                     _scoreManager.OnMatchFound();
+                    _audioManager.Play(FXType.Match);
                 }
                 else
                 {
-                    // wrong match
-                    Debug.LogError("Wrong match");
+                    _audioManager.Play(FXType.Mismatch);
                 }
 
                 _previouslySelectedCard = null;
@@ -112,7 +117,10 @@ namespace CardMatch.Managers
             }
 
             if (ReachedEndCondition())
+            {
+                _audioManager.Play(FXType.GameComplete);
                 _continueRoutine = StartCoroutine(ContinueToNextLevel());
+            }
         }
 
         private bool ReachedEndCondition()
